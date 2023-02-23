@@ -1,0 +1,28 @@
+{
+  "name": "blossom",
+  "version": "1.0.0",
+  "description": "discord eris bot",
+  "main": "source/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realQuartzi/Blossom.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "eris",
+    "javascript"
+  ],
+  "author": "Quartzi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/realQuartzi/Blossom/issues"
+  },
+  "homepage": "https://github.com/realQuartzi/Blossom#readme",
+  "dependencies": {
+    "eris": "^0.17.1"
+  }
+}
