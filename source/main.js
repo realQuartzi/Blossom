@@ -1,25 +1,94 @@
-const Eris = require("eris")
+global.Eris = require("eris")
+global.presetMessages = require('../assets/Messages.json');
+global.registeredCommands = [];
+global.Console = require('./logger.js');
+
 const { Config } = require('./config.js');
-const { Logger } = require('./logger.js');
 
 // CTRL + C
 // Kill Process Event
 process.on("SIGINT", function () {
-    Logger.LogInfo("Shutting Down...");
+    Console.LogInfo("Shutting Down...");
     bot.disconnect();
-    Logger.LogInfo("Shut Down!")
+    Console.LogInfo("Shut Down!")
     process.exit();
 });
 
-const bot = new Eris(Config.botToken, {
-    intents: []
-});
+// -- Helpful Functions -- //
+
+//#region Get Username
+
+// Get Username by member
+function GetUsername(member) 
+{
+    if (member.nick === null) 
+    {
+        return member.username;
+    } 
+    else 
+    {
+        return member.nick;
+    }
+}
+
+global.getUsername = GetUsername;
+
+//#endregion
+
+//#region Invalid Argument
+
+// Returns a message to users about invalid arguments used for commands
+function InvalidArguments(message, user, command) 
+{
+    bot.createMessage(message.channel.id, {
+        "embed": {
+            "title": "Wrong Command Usage!",
+            "description": messages.wrongargs.replace("$user", user.mention).replace("$command", command.replace("*", "")),
+            "color": 16724557,
+            "thumbnail": 
+            {
+                "url": user.avatarURL
+            },
+            "author": {
+                "name": "Blossom",
+                "icon_url": bot.user.avatarURL
+            }
+        }
+    }); // Send an "Invalid arguments" message.
+}
+
+global.invalidArguments = InvalidArguments;
+
+//#endregion
+
+// -- Discord Bot -- //
+
+//#region Discord Bot
+
+global.bot = new Eris.CommandClient(Config.botToken,
+    {
+        defaultImageSize: 512,
+        autoreconnect: true,
+        intents: [1 << 0, 1 << 1, 1 << 9]
+    },
+    {
+        defaultHelpCommand: false,
+        owner: "Quartzi",
+        prefix: "/"
+    }
+);
+
+
+// Load all Commands!
+require("./commands/loadCommands.js").run(undefined, undefined);
+
+//#region Bot Events
 
 // Discord Bot Ready Event
 bot.on("ready", () => {
-    Logger.LogInfo("Ready Event Called!");
-    Logger.LogInfo("User: " + bot.user.username);
-    Logger.LogInfo("Startup Time: " + bot.startTime)
+    Console.LogInfo("Ready Event Called!");
+    Console.LogInfo("User: " + bot.user.username);
+    Console.LogInfo("Startup Time: " + bot.startTime)
 
      // Set Bot Status
     bot.editStatus("online", {
@@ -31,8 +100,12 @@ bot.on("ready", () => {
 
 // Discord Bot Error Event
 bot.on("error", (err) => {
-    Logger.LogError(err);
+    Console.LogError(err);
 });
+
+//#endregion
+
+//#endregion
 
 // Connect ^^
 bot.connect();
