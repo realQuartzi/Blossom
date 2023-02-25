@@ -66,6 +66,8 @@ module.exports.alias =
 
 module.exports.options = 
 {
+    "description": "Flip a coin to return Heads or Tails",
+
     "cooldown": 3000,
     "cooldownMessage": presetMessages.cooldown,
     "cooldownReturns": 3

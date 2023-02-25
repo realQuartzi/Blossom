@@ -5,6 +5,7 @@ global.Console = require('./logger.js');
 
 const { Config } = require('./config.js');
 
+
 // CTRL + C
 // Kill Process Event
 process.on("SIGINT", function () {
@@ -34,6 +35,33 @@ function GetUsername(member)
 global.getUsername = GetUsername;
 
 //#endregion
+
+//#region Permission Denied
+
+// Returns a message to users about invalid permision to use the command
+function PermissionDenied(message, user, command) 
+{
+    bot.createMessage(message.channel.id, {
+        "embed": {
+            "title": "Invalid Permissions!",
+            "description": messages.noPermission.replace("$user", user.mention).replace("$command", command),
+            "color": 16724557,
+            "thumbnail":
+            {
+                "url": user.avatarURL
+            },
+            "author": {
+                "name": "Blossom",
+                "icon_url": bot.user.avatarURL
+            }
+        }
+    }); // Send a "Permission Denied" message.
+}
+
+global.permissionDenied = PermissionDenied;
+
+//#endregion
+
 
 //#region Invalid Argument
 
@@ -73,6 +101,7 @@ global.bot = new Eris.CommandClient(Config.botToken,
     },
     {
         defaultHelpCommand: false,
+        name: "Blossom",
         owner: "Quartzi",
         prefix: "/"
     }
