@@ -14,6 +14,8 @@ module.exports.run = (message, args) => {
         Console.LogInfo("Un-Registered Command: " + registeredCommands[i]);
     }
 
+    Console.LogInfo("Application ID: " + bot.application);
+
     // Ensure registeredCommands List is Emptied
     registeredCommands = [];
 
@@ -23,13 +25,21 @@ module.exports.run = (message, args) => {
     {
         var curCommand = require("../commands/" + file);
         var commandName = file.replace(".js", "");
-        bot.registerCommand(commandName, curCommand.run, curCommand.options);
+        var registeredCommand = bot.registerCommand(commandName, curCommand.run, curCommand.options);
+
+        /*Console.Log(curCommand.settings.createCommand);
+        if (curCommand.settings.createCommand == true) 
+        {
+            Console.Log("Create Command");
+            bot.createCommand(registeredCommand);
+        }*/
+
         registeredCommands[i] = commandName;
 
         Console.LogInfo("Registered Command: " + registeredCommands[i]);
 
         // Check if command has aliases
-        aliases = curCommand.alias.aliases;
+        aliases = curCommand.settings.aliases;
         if(aliases.length > 0)
         {
             for (let j = 0; j < aliases.length; j++) 
@@ -41,15 +51,24 @@ module.exports.run = (message, args) => {
             }
         }
 
+
+
         i++;
     });
 };
 
-module.exports.alias = {
+module.exports.settings =
+{
+    "createCommand": false,
+
+    "name": "Load Commands",
+    "type": Eris.Constants.ApplicationCommandTypes.CHAT_INPUT,
     "aliases": []
 }
 
 module.exports.options = {
+    "description": "Reloads all the commands on the bot",
+
     "cooldown": 60000,
     "cooldownMessage": presetMessages.cooldown,
     "cooldownReturns": 6

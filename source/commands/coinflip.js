@@ -59,8 +59,10 @@ module.exports.run = (message, args) =>
     }
 }
 
-module.exports.alias =
+module.exports.settings =
 {
+    "createCommand": true,
+
     "aliases": ["coin"]
 }
 

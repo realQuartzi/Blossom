@@ -3,6 +3,8 @@ global.presetMessages = require('../assets/Messages.json');
 global.registeredCommands = [];
 global.Console = require('./logger.js');
 
+global.Canvas = require("canvas")
+
 const { Config } = require('./config.js');
 
 
@@ -107,10 +109,6 @@ global.bot = new Eris.CommandClient(Config.botToken,
     }
 );
 
-
-// Load all Commands!
-require("./commands/loadCommands.js").run(undefined, undefined);
-
 //#region Bot Events
 
 // Discord Bot Ready Event
@@ -119,12 +117,15 @@ bot.on("ready", () => {
     Console.LogInfo("User: " + bot.user.username);
     Console.LogInfo("Startup Time: " + bot.startTime)
 
-     // Set Bot Status
+    // Set Bot Status
     bot.editStatus("online", {
         "name": "Hello World!",
         "type": 0,
         "url": "https://github.com/realQuartzi/Blossom"
     });
+
+    // Load all Commands! After Bot Ready Event
+    require("./commands/loadCommands.js").run(undefined, undefined);
 });
 
 // Discord Bot Error Event

@@ -17,7 +17,6 @@ function GetResult(userChoice, botChoice)
     }
 }
 
-
 module.exports.run = (message, args) => 
 {
     if (args.length === 1) 
@@ -109,8 +108,10 @@ module.exports.run = (message, args) =>
     }
 }
 
-module.exports.alias =
+module.exports.settings =
 {
+    "createCommand": true,
+
     "aliases": ["rps"]
 }
 

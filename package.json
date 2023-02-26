@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/realQuartzi/Blossom#readme",
   "dependencies": {
-    "eris": "^0.17.1"
+    "canvas": "^2.11.0",
+    "eris": "github:abalabahaha/eris#dev"
   }
 }
