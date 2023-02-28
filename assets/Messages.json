@@ -1,5 +1,5 @@
 {
-    "welcome": "Hello %user, welcome to $guild!",
+    "welcome": "Hello $user, welcome to $guild!",
     "farewell": "Bye, $user! Sad to see you go.",
     "mention":"You mentioned me $user? How may I help you? ^^",
     "noPermission":"Sorry $user, but you don't have the required permission to run `$command`.\nIf you believe this is an error, please contact a moderator.",
