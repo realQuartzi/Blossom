@@ -5,7 +5,7 @@ export const CoinFlip: Command =
 {
     name: "coinflip",
     description: "Flip a coin to return Heads or Tails.",
-    dmPermission: false,
+    dmPermission: true,
     run: async (bot: Client, interaction: CommandInteraction) => 
     {
         interaction.followUp({embeds: [GetEmbed(bot, interaction.user)]});
